@@ -1,0 +1,102 @@
+Para configurar la replicación de **SQL Server 2022** entre una máquina virtual con **Ubuntu Server** y una máquina física con **Windows**, puedes seguir estos pasos. La configuración implica instalar SQL Server en ambas máquinas, habilitar la replicación y configurar los roles de publicador, distribuidor y suscriptor.
+
+### **1. Instalar SQL Server en Ubuntu Server (VM)**
+
+1. **Actualizar el sistema e instalar SQL Server**:
+   ```bash
+   sudo apt update
+   sudo apt install -y curl gnupg
+   curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+   curl https://packages.microsoft.com/config/ubuntu/22.04/mssql-server-2022.list | sudo tee /etc/apt/sources.list.d/mssql-server.list
+   sudo apt update
+   sudo apt install -y mssql-server
+
+2. **Configurar SQL Server**:
+   ```bash
+   sudo /opt/mssql/bin/mssql-conf setup
+
+   - Selecciona la edición (Developer o Express).
+   - Configura la contraseña del usuario `sa`.
+
+3. **Verificar que el servicio está activo**:
+   ```bash
+   systemctl status mssql-server
+
+4. **Instalar herramientas de cliente opcionales**:
+   ```bash
+   sudo apt install -y mssql-tools unixodbc-dev
+   echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+   source ~/.bashrc
+
+### **2. Instalar SQL Server en Windows (Máquina física)**
+
+1. Descarga el instalador de SQL Server 2022 desde el sitio oficial de Microsoft.
+2. Durante la instalación:
+   - Selecciona la edición (Developer o Express).
+   - Configura el modo de autenticación (Windows o Mixto).
+   - Habilita el rol de **Distribuidor** si esta máquina será el distribuidor.
+
+3. Instala **SQL Server Management Studio (SSMS)** para administrar la base de datos.
+
+### **3. Configurar la replicación en SQL Server**
+
+#### **En la máquina física (Windows)**
+
+1. **Habilitar el rol de distribuidor**:
+   - Abre **SQL Server Management Studio (SSMS)**.
+   - Conéctate al servidor.
+   - Ve a **Replication** > **Configure Distribution**.
+   - Sigue el asistente para configurar el servidor como distribuidor.
+
+2. **Configurar el publicador**:
+   - En SSMS, haz clic derecho en **Replication** > **New Publication**.
+   - Selecciona la base de datos que deseas replicar.
+   - Configura el tipo de replicación (Snapshot, Transactional o Merge).
+   - Completa el asistente.
+
+3. **Agregar el suscriptor**:
+   - Haz clic derecho en **Replication** > **New Subscription**.
+   - Selecciona la publicación creada anteriormente.
+   - Agrega el servidor de Ubuntu como suscriptor.
+
+#### **En la máquina virtual (Ubuntu Server)**
+
+1. **Permitir conexiones remotas**:
+   - Edita el archivo de configuración de SQL Server:
+     ```bash
+     sudo nano /var/opt/mssql/mssql.conf
+   - Asegúrate de que `tcp` esté habilitado y que el puerto (por defecto, 1433) esté abierto.
+
+2. **Probar la conexión desde Windows**:
+   - Desde SSMS en Windows, intenta conectarte al servidor de Ubuntu usando la IP de la VM y las credenciales de `sa`.
+
+### **4. Comandos útiles para replicación**
+
+#### **Verificar el estado del servicio en Ubuntu**:
+```bash
+systemctl status mssql-server
+
+#### **Probar la conexión desde Ubuntu**:
+```bash
+sqlcmd -S <IP-Windows>,1433 -U sa -P <password>
+
+#### **Abrir el puerto 1433 en Ubuntu**:
+```bash
+sudo ufw allow 1433/tcp
+sudo ufw reload
+
+#### **Habilitar la replicación en SQL Server (Windows)**:
+```sql
+-- Habilitar la distribución
+EXEC sp_adddistributor @distributor = '<nombre-servidor>', @password = '<contraseña>';
+
+-- Configurar el publicador
+EXEC sp_addpublication @publication = '<nombre-publicacion>', @status = N'active', @sync_method = N'concurrent';
+
+-- Agregar un artículo a la publicación
+EXEC sp_addarticle @publication = '<nombre-publicacion>', @article = '<nombre-tabla>';
+
+### **5. Verificar la replicación**
+
+- En SSMS, revisa el estado de la replicación en **Replication Monitor**.
+- Asegúrate de que los datos se estén replicando correctamente entre el publicador y el suscriptor.

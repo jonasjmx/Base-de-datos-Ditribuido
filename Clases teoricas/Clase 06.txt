@@ -1,0 +1,22 @@
+Notas de la clase 06
+
+Instancias y Servidores en Bases de Datos Distribuidas
+Una instancia es un servidor virtual que permite copiar la base de datos (BD) en otro servidor.
+
+El servidor principal se conoce como servidor maestro (master), mientras que los servidores secundarios se denominan servidores esclavos (slave).
+Las instancias pueden estar alojadas en:
+La misma máquina.
+Otras máquinas físicas.
+Máquinas virtuales.
+Este enfoque es multiplataforma, lo que permite su implementación en diferentes entornos.
+------------------------------------------------------------------------------------------------------------------------
+Consolidación de Datos
+La consolidación de datos implica centralizar la información de múltiples bases de datos en un único servidor maestro.
+------------------------------------------------------------------------------------------------------------------------
+Diseminación de Datos
+La diseminación de datos se refiere al proceso en el que:
+
+Un servidor maestro distribuye los datos a cada una de las instancias secundarias.
+Los datos almacenados en otras bases de datos se reflejan en el servidor maestro, asegurando consistencia y sincronización.
+
+

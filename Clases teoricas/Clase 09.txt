@@ -1,0 +1,37 @@
+Notas de la clase 09
+
+------------------------------------------------------------------------------------------------------------------------
+Configuración y Comprobación de la Replicación en SQL Server
+Comprobación de la Instalación de SQL Server en Linux Ubuntu Server (versión 22):
+------------------------------------------------------------------------------------------------------------------------
+Verifique que SQL Server esté correctamente instalado y en funcionamiento en el servidor Ubuntu.
+Configuración del Agente de Replicación en Windows:
+------------------------------------------------------------------------------------------------------------------------
+Asegúrese de que la instancia de SQL Server en Windows tenga habilitado el agente para la replicación.
+Ejecución como Administrador:
+------------------------------------------------------------------------------------------------------------------------
+Inicie las configuraciones necesarias ejecutando SQL Server Management Studio (SSMS) como administrador.
+Creación de la Base de Datos a Replicar en Windows:
+------------------------------------------------------------------------------------------------------------------------
+Elabore la base de datos que será replicada desde el servidor Windows.
+Configuración del Distribuidor:
+------------------------------------------------------------------------------------------------------------------------
+Siga los pasos de configuración para habilitar el distribuidor en SQL Server.
+Inicie la aplicación de configuración de SQL Server 2022 y active los protocolos de comunicación necesarios.
+Creación de una Regla para el Puerto 1433:
+------------------------------------------------------------------------------------------------------------------------
+Configure una regla en el firewall para permitir conexiones a través del puerto 1433, que es el puerto predeterminado de SQL Server.
+Asignación de la Base de Datos al Distribuidor:
+------------------------------------------------------------------------------------------------------------------------
+En las propiedades del distribuidor, seleccione la base de datos que será utilizada para la replicación.
+Creación de la Base de Datos Suscriptora:
+------------------------------------------------------------------------------------------------------------------------
+Cree la base de datos que actuará como suscriptora para el distribuidor.
+Esta base de datos debe estar alojada en SQL Server en Ubuntu Server.
+Verificación de Nombres y Dirección IP:
+------------------------------------------------------------------------------------------------------------------------
+Compruebe que los nombres de las instancias y la dirección IP del servidor replicado sean correctos.
+Comprobación de la Replicación:
+------------------------------------------------------------------------------------------------------------------------
+Verifique en la ventana de replicación que no haya errores en el proceso.
+Si todo está configurado correctamente, la replicación debería completarse sin problemas.

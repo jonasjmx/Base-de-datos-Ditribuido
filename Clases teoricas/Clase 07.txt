@@ -1,0 +1,70 @@
+Notas de la clase 07
+
+T1. Flotilla
+El término "Flotilla" se refiere a la gestión de un conjunto de vehículos, ya sea para uso empresarial, logístico o de transporte. En el contexto de bases de datos distribuidas, se puede implementar un sistema para administrar información relacionada con vehículos, conductores, mantenimiento, rutas y combustible. Este sistema puede incluir:
+
+Tablas principales: Vehículos, Conductores, Combustible, Rutas, Mantenimiento.
+Objetivo: Optimizar la gestión de recursos y operaciones de la flotilla mediante consultas eficientes y datos distribuidos.
+------------------------------------------------------------------------------------------------------------------------
+T2. Máquinas Virtuales
+Las máquinas virtuales (VMs) son entornos virtualizados que permiten ejecutar sistemas operativos y aplicaciones de manera aislada en un servidor físico. En bases de datos distribuidas, las VMs son útiles para:
+
+Alojar instancias de bases de datos distribuidas: Cada máquina virtual puede actuar como un nodo en el sistema.
+Escalabilidad: Permiten agregar o eliminar nodos según las necesidades del sistema.
+Multiplataforma: Facilitan la implementación de bases de datos en diferentes sistemas operativos.
+Ejemplo práctico: Configurar una máquina virtual con Ubuntu Server para alojar una instancia de PostgreSQL o SQL Server.
+------------------------------------------------------------------------------------------------------------------------
+T3. API Swagger
+Swagger es una herramienta para diseñar, documentar y probar APIs RESTful. En el contexto de bases de datos distribuidas, Swagger puede ser utilizado para:
+
+Documentar la API: Generar una interfaz interactiva que describa los endpoints disponibles, los métodos HTTP (GET, POST, PUT, DELETE) y los datos esperados.
+Probar la API: Permite a los desarrolladores interactuar con la API directamente desde la documentación.
+Integración: Facilita la comunicación entre aplicaciones cliente y bases de datos distribuidas.
+Ejemplo: Crear una API RESTful para gestionar la flotilla, donde los endpoints permitan consultar vehículos, registrar mantenimientos o asignar rutas.
+------------------------------------------------------------------------------------------------------------------------
+Repositorio en GitHub
+Un repositorio completo en GitHub debe incluir:
+
+Código fuente: Todo el código relacionado con el proyecto, incluyendo scripts SQL, configuraciones de la API y código de la aplicación cliente.
+Documentación: Archivos README detallados con instrucciones de instalación, uso y configuración.
+Ejemplos: Capturas de pantalla, ejemplos de consultas y respuestas de la API.
+Diagrama de base de datos: Modelo entidad-relación (MER) que represente la estructura de la base de datos.
+Pruebas: Scripts o archivos para probar la funcionalidad del sistema.
+------------------------------------------------------------------------------------------------------------------------
+Ejercicio de Fragmentación Horizontal en PostgreSQL (pgAdmin)
+Fragmentación Horizontal: Dividir una tabla en fragmentos basados en un criterio específico, como la ubicación geográfica o el tipo de datos.
+
+Ejemplo práctico:
+
+Tabla original:
+
+CREATE TABLE Estudiantes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50),
+    carrera VARCHAR(50),
+    ciudad VARCHAR(50)
+);
+
+Fragmentos:
+
+Fragmento 1: Estudiantes de Quito.
+
+CREATE TABLE Estudiantes_Quito AS
+SELECT * FROM Estudiantes WHERE ciudad = 'Quito';
+
+Fragmento 2: Estudiantes de Ambato.
+
+CREATE TABLE Estudiantes_Ambato AS
+SELECT * FROM Estudiantes WHERE ciudad = 'Ambato';
+
+Fragmento 3: Estudiantes de Cuenca.
+
+CREATE TABLE Estudiantes_Cuenca AS
+SELECT * FROM Estudiantes WHERE ciudad = 'Cuenca';
+
+Gestión en pgAdmin:
+
+Crear las tablas fragmentadas desde la consola de consultas.
+Verificar los datos en cada fragmento.
+Realizar consultas específicas en cada fragmento para optimizar el acceso.
+

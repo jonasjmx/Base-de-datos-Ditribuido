@@ -1,0 +1,119 @@
+Notas de la clase 05
+
+Tipos de Fragmentación
+Fragmentación Horizontal
+La fragmentación horizontal se utiliza para dividir los datos en fragmentos basados en criterios específicos, como la seguridad o la localización geográfica.
+------------------------------------------------------------------------------------------------------------------------
+Ejemplo: Fragmentación Horizontal por Ciudad
+
+Tabla Original:
+CREATE TABLE Estudiantes (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    carrera VARCHAR(50),
+    ciudad VARCHAR(50)
+);
+
+Fragmentación por Ciudad:
+
+Fragmento 1: Estudiantes de Quito
+
+CREATE TABLE Estudiantes_Quito (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    carrera VARCHAR(50),
+    ciudad VARCHAR(50)
+);
+
+INSERT INTO Estudiantes_Quito VALUES
+(1, 'Ana Pérez', 'Ingeniería', 'Quito'),
+(3, 'Carla Ruiz', 'Ingeniería', 'Quito');
+
+Fragmento 2: Estudiantes de Ambato
+
+CREATE TABLE Estudiantes_Ambato (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    carrera VARCHAR(50),
+    ciudad VARCHAR(50)
+);
+
+INSERT INTO Estudiantes_Ambato VALUES
+(2, 'Luis Mora', 'Medicina', 'Ambato'),
+(5, 'Rosa Vega', 'Medicina', 'Ambato');
+
+Fragmento 3: Estudiantes de Cuenca
+
+CREATE TABLE Estudiantes_Cuenca (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    carrera VARCHAR(50),
+    ciudad VARCHAR(50)
+);
+
+INSERT INTO Estudiantes_Cuenca VALUES
+(4, 'Mario León', 'Derecho', 'Cuenca'),
+(6, 'J. Ortega', 'Derecho', 'Cuenca');
+------------------------------------------------------------------------------------------------------------------------
+Formato de Informes
+Introducción:
+Breve descripción del tema y su importancia.
+
+Objetivo General:
+Declaración del propósito principal del informe.
+
+Objetivos Específicos:
+
+Definir tres objetivos específicos relacionados con el tema.
+Marco Teórico:
+
+Explicación de conceptos clave y fundamentos teóricos.
+Herramientas Empleadas:
+
+Lista de herramientas utilizadas (software, lenguajes, etc.).
+Desarrollo:
+
+Código fuente y capturas de pantalla del proceso.
+Conclusiones:
+
+Resumen de los resultados obtenidos y aprendizajes.
+Referencias Bibliográficas:
+
+Enlaces a recursos utilizados, como:
+Link del repositorio en GitHub.
+Link del bloc de notas.
+Modelo Entidad-Relación:
+
+Diagrama que represente las relaciones entre las entidades.
+Normalización:
+
+Explicación del proceso de normalización aplicado.
+------------------------------------------------------------------------------------------------------------------------
+Trigger para Licencias Vencidas
+Descripción:
+Este trigger verifica si un conductor tiene una licencia vencida y genera un aviso.
+
+CREATE OR REPLACE TRIGGER aviso_licencia
+AFTER INSERT OR UPDATE ON Conductor
+DECLARE
+    v NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO v
+    FROM Conductor c, Documento d, TipoDocumento t
+    WHERE c.Id_Conductor = d.Id_Documento
+    AND d.Id_TipoDoc = t.Id_TipoDoc
+    AND t.Nombre = 'Licencia de Conducir'
+    AND d.FechaVencim < SYSDATE;
+
+    IF v > 0 THEN
+        DBMS_OUTPUT.PUT_LINE('Aviso: ' || v || ' licencia(s) vencida(s)');
+    END IF;
+END;
+/
+------------------------------------------------------------------------------------------------------------------------
+Propósito:
+Este trigger se activa después de insertar o actualizar datos en la tabla Conductor y verifica si hay licencias vencidas.
+
+Verificar Disponibilidad del Conductor
+Para determinar si un conductor está disponible, se puede implementar una consulta o lógica adicional en la base de datos que evalúe su estado actual.
+------------------------------------------------------------------------------------------------------------------------

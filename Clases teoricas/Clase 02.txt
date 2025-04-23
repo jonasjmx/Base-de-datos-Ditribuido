@@ -1,0 +1,31 @@
+Notas de la clase 02
+
+SERVIDOR CENTRAL: Es un único servidor encargado de almacenar la base de datos (BD).
+
+Clientes: Son los usuarios que pueden acceder a la base de datos a través de una interfaz.
+
+Nodos: Cada nodo tiene características específicas que lo diferencian y contribuyen al sistema distribuido.
+
+Interfaz: Es el medio que permite a los clientes interactuar con la base de datos.
+
+Modificaciones en caliente: El sistema permite realizar cambios en la base de datos sin necesidad de detener su funcionamiento.
+
+Protocolo: Para garantizar una comunicación segura en un sistema distribuido, se utiliza el protocolo HTTPS.
+------------------------------------------------------------------------------------------------------------------------
+Ejemplo práctico: Crear una base de datos para administrar productos
+Requisitos:
+
+El dueño de la empresa será el responsable de gestionar los productos.
+Los clientes podrán seleccionar productos con un límite de $100.
+Los productos deben clasificarse según su precio.
+------------------------------------------------------------------------------------------------------------------------
+Diseño de la base de datos
+Modelo relacional:
+
+Definir las relaciones entre las entidades (productos, clientes, etc.).
+Modelo lógico:
+
+Diseñar las tablas necesarias para representar las entidades y sus relaciones.
+Modelo físico:
+
+Implementar el diseño en SQL para crear la base de datos y sus tablas.

@@ -1,0 +1,105 @@
+Notas de la clase 01
+
+Bases de Datos Centralizadas vs. Distribuidas y Modelos de Arquitectura
+1. Diferencias Clave
+Base de Datos Centralizada:
+
+Todos los datos se almacenan en un único servidor.
+
+Ventajas: Sencillez, fácil gestión y mantenimiento.
+
+Desventajas: Punto único de fallo, escalabilidad limitada.
+
+Ejemplo: Bases de datos tradicionales en pequeñas empresas.
+
+Base de Datos Distribuida:
+
+Los datos se reparten en múltiples nodos/servidores conectados en red.
+
+Ventajas: Alta escalabilidad, tolerancia a fallos y mayor disponibilidad.
+
+Desventajas: Mayor complejidad en gestión, consistencia y sincronización.
+
+Ejemplo: Sistemas como Cassandra, MongoDB o bases de datos en la nube.
+------------------------------------------------------------------------------------------------------------------------
+2. Conceptos Fundamentales
+Base de Datos
+Contenedor estructurado que organiza datos mediante:
+
+Campos: Atributos almacenados (ej. texto, número, fecha).
+
+Consultas: Comandos para recuperar información.
+
+Índices: Estructuras que optimizan el rendimiento.
+
+Componentes de una Base de Datos Distribuida
+Nodo: Máquina individual que almacena datos.
+
+Clúster: Conjunto de nodos que trabajan en conjunto.
+
+Réplica: Copia de datos en múltiples nodos para redundancia.
+
+Particionamiento: División de datos para distribuirlos entre nodos.
+------------------------------------------------------------------------------------------------------------------------
+3. Escalabilidad en Bases de Datos
+¿Qué es la escalabilidad?
+Capacidad de un sistema para manejar crecimiento (datos, usuarios, transacciones) sin perder rendimiento.
+
+Tipos de Escalabilidad
+Escalabilidad Vertical (*Scale-up*):
+
+Aumentar recursos de un único servidor (CPU, RAM, disco).
+
+Ejemplo: Actualizar el hardware de un servidor centralizado.
+
+Limitación: Límites físicos y costos elevados.
+
+Escalabilidad Horizontal (*Scale-out*):
+
+Añadir más nodos/servidores al sistema.
+
+Ejemplo: Bases de datos distribuidas como Cassandra.
+
+Ventaja: Flexibilidad y crecimiento ilimitado.
+------------------------------------------------------------------------------------------------------------------------
+4. Disponibilidad y Tolerancia a Fallos
+Disponibilidad: Capacidad de un sistema para permanecer operativo y accesible.
+
+Tolerancia a Fallos: Capacidad de funcionar incluso ante fallos (hardware, red, etc.).
+
+Menor Latencia: Reducción del tiempo de respuesta en sistemas distribuidos.
+------------------------------------------------------------------------------------------------------------------------
+5. Teorema CAP
+En sistemas distribuidos, solo se pueden garantizar 2 de estas 3 propiedades:
+
+Consistencia: Todos los nodos ven los mismos datos simultáneamente.
+
+Disponibilidad: El sistema responde siempre, incluso con fallos.
+
+Tolerancia a Particiones: Funcionamiento continuo ante divisiones en la red.
+------------------------------------------------------------------------------------------------------------------------
+6. Arquitecturas Comunes
+Arquitectura	        Descripción	                                            Ventajas	                Desventajas
+Maestro-Esclavo	        Un nodo maestro gestiona escrituras; esclavos replican.	Sencillez, consistencia.	El maestro es un punto único de fallo.
+Peer-to-Peer (P2P)	    Todos los nodos son iguales y colaboran.	            Sin puntos únicos de fallo.	Complejidad en sincronización.
+Multi-Master	        Múltiples nodos aceptan escrituras.	                    Alta disponibilidad.	    Riesgo de conflictos de consistencia.
+
+------------------------------------------------------------------------------------------------------------------------
+7. Replicación y Sincronización
+Réplicas Síncronas:
+
+Los datos se replican en tiempo real antes de confirmar operaciones.
+
+Ventaja: Alta consistencia.
+
+Desventaja: Mayor latencia.
+
+Réplicas Asíncronas:
+
+Los datos se replican con retraso.
+
+Ventaja: Menor latencia.
+
+Desventaja: Riesgo de pérdida de datos en fallos.
+
+

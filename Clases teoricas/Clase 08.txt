@@ -1,0 +1,58 @@
+Notas de la clase 08
+
+Instalación y Configuración de MongoDB
+------------------------------------------------------------------------------------------------------------------------
+1. Instalar MongoDB
+MongoDB es una base de datos NoSQL orientada a documentos. Para instalarlo:
+
+Descargue el instalador desde el sitio oficial de MongoDB.
+Siga las instrucciones específicas para su sistema operativo (Windows, Linux o macOS).
+------------------------------------------------------------------------------------------------------------------------
+2. Instalar Mongo Shell
+Mongo Shell es una herramienta de línea de comandos que permite interactuar con MongoDB.
+
+Asegúrese de que el instalador de MongoDB incluya Mongo Shell.
+Si no está incluido, descárguelo por separado desde el sitio oficial.
+------------------------------------------------------------------------------------------------------------------------
+3. Copiar los Archivos a la Carpeta bin de MongoDB
+Localice la carpeta de instalación de MongoDB.
+Copie los archivos necesarios (como mongod.exe y mongo.exe) en la carpeta bin.
+Esto asegura que los ejecutables estén disponibles para su uso.
+------------------------------------------------------------------------------------------------------------------------
+4. Ejecutar mongod.exe
+mongod.exe es el proceso principal de MongoDB que inicia el servidor.
+Ejecútelo desde la línea de comandos para iniciar el servicio de MongoDB.
+
+mongod.exe --dbpath "ruta_a_la_base_de_datos"
+------------------------------------------------------------------------------------------------------------------------
+5. Configurar Variables de Entorno
+Agregue la ruta de la carpeta bin de MongoDB a las variables de entorno del sistema.
+Esto permite ejecutar comandos de MongoDB desde cualquier ubicación en la terminal.
+
+mongo.exe
+------------------------------------------------------------------------------------------------------------------------
+Configuración en Linux Ubuntu 24
+1. Crear Carpetas para la Configuración de Shards
+Cree las carpetas necesarias para almacenar los datos y configuraciones de los shards.
+
+mkdir -p /data/shard1 /data/shard2 /data/configdb
+
+2. Actualizar el Sistema
+Antes de instalar MongoDB, asegúrese de que el sistema esté actualizado.
+
+sudo apt update && sudo apt upgrade -y
+
+3. Instalar MongoDB en Ubuntu 24
+Agregue la clave GPG y el repositorio oficial de MongoDB.
+
+wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+
+4. Iniciar el Servicio de MongoDB
+Inicie el servicio de MongoDB y habilítelo para que se ejecute automáticamente al iniciar el sistema.
+
+sudo systemctl start mongod
+sudo systemctl enable mongod
+

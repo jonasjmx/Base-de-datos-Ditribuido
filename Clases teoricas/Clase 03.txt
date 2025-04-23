@@ -1,0 +1,105 @@
+Notas de la clase 03
+
+Distribución de Datos en Bases de Datos Distribuidas (BDD)
+Fragmentación de datos:
+Los datos deben estar fragmentados para optimizar su distribución y acceso.
+
+Fragmentación Horizontal:
+
+Basada en condiciones de selección.
+Maneja registros (varios datos).
+Es la más eficiente y rápida.
+Fragmentación Vertical:
+
+Basada en conjuntos de atributos.
+Maneja atributos individuales (un solo dato).
+Esquema:
+El esquema es el archivo que define la estructura de la base de datos distribuida.
+------------------------------------------------------------------------------------------------------------------------
+Modelo de Réplica en Bases de Datos Distribuidas
+Nodos Homogéneos vs. Heterogéneos en BDD
+
+Nodos Homogéneos:
+
+Todos los nodos usan el mismo SGBD (por ejemplo, todos con PostgreSQL o MongoDB).
+Ventajas:
+
+Fácil administración.
+Consultas optimizadas (mismo motor).
+Ejemplos:
+
+Un clúster de MySQL con réplicas.
+Sharding en MongoDB (todos los nodos usan MongoDB).
+Nodos Heterogéneos:
+
+Los nodos utilizan distintos SGBD (por ejemplo, Oracle + SQL Server + PostgreSQL).
+Ventajas:
+
+Integración de sistemas legacy.
+Permite escoger la mejor tecnología para cada necesidad.
+Desafíos:
+
+Traducción de consultas (requiere middleware como ODBC/JDBC).
+Consistencia transaccional más compleja.
+Ejemplos:
+
+Oracle Database Gateway (conecta Oracle con SQL Server).
+¿Cuándo usar cada uno?
+
+Homogéneo	                Heterogéneo
+Sistemas nuevos	            Integración de sistemas legacy
+Alto rendimiento	        Flexibilidad tecnológica
+Escalabilidad predecible	Migraciones progresivas
+------------------------------------------------------------------------------------------------------------------------
+Ventajas de las Bases de Datos Distribuidas (BDD)
+Mayor disponibilidad y confiabilidad:
+
+Los datos están replicados en múltiples nodos. Si uno falla, otros siguen respondiendo.
+Ejemplo: Amazon DynamoDB o Cassandra soportan fallos de nodos sin perder servicio.
+Escalabilidad eficiente:
+
+Permite agregar nodos horizontales (sharding) sin detener el sistema.
+Ejemplo: MongoDB escala para manejar petabytes de datos distribuidos.
+Distribución de carga:
+
+Las consultas se reparten entre nodos, evitando cuellos de botella en un solo servidor.
+Ejemplo: Google Spanner distribuye consultas globalmente para reducir latencia.
+Flexibilidad y adaptación geográfica:
+
+Baja latencia: Los datos se almacenan cerca de los usuarios (ejemplo: CDN para BDD).
+Cumplimiento legal: Permite guardar datos en regiones específicas (ejemplo: GDPR en Europa).
+Ejemplo: Microsoft Azure Cosmos DB permite elegir la ubicación de cada réplica.
+------------------------------------------------------------------------------------------------------------------------
+Desafíos de las Bases de Datos Distribuidas (BDD)
+Complejidad administrativa:
+
+Causa:
+Configuración multi-nodo: Coordinar nodos, réplicas y fragmentos requiere herramientas especializadas (ejemplo: Kubernetes).
+Monitorización: Es necesario rastrear el estado de múltiples servidores en tiempo real.
+Ejemplo: Un clúster de Cassandra necesita ajustar políticas de replicación y reparación de nodos manualmente.
+Seguridad y coherencia de datos:
+
+Causa:
+Más nodos = más puntos de entrada para ataques (ejemplo: ataques MITM).
+Coherencia eventual: En sistemas AP (como DynamoDB), los datos pueden estar inconsistentes temporalmente.
+Ejemplo: Si un nodo es comprometido, es necesario evitar que propague datos corruptos.
+Gestión de transacciones distribuidas:
+
+Causa:
+Protocolos complejos: ACID distribuido requiere Two-Phase Commit (2PC) o SAGA, que son lentos y propensos a bloqueos.
+Fallos parciales: Si un nodo falla a mitad de una transacción, el sistema debe decidir entre rollback o commit.
+Ejemplo: PayPal usa SAGA para manejar pagos entre microservicios, pero es difícil de depurar.
+Latencia y rendimiento:
+
+Causa:
+Ley de la física: La comunicación entre nodos en distintas regiones introduce retrasos (ejemplo: 100ms entre EE.UU. y Europa).
+Trade-off CAP: Si priorizas disponibilidad (AP), las lecturas pueden devolver datos obsoletos.
+Ejemplo: Juegos online con BDD distribuidas sufren lag si la sincronización es lenta.
+------------------------------------------------------------------------------------------------------------------------
+Soluciones comunes a los desafíos
+
+Desafío	                    Posible solución
+Complejidad administrativa	Usar servicios gestionados (ejemplo: AWS Aurora, MongoDB Atlas).
+Seguridad	                Cifrado en tránsito (TLS) y en reposo (AES-256).
+Transacciones	            Patrones como Event Sourcing o CQRS.
+Latencia	                Réplicas locales (ejemplo: CDN para BDD como FaunaDB).
