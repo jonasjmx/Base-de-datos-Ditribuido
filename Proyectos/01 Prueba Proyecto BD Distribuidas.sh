@@ -42,19 +42,14 @@ sudo ufw reload  # Opcional - Reiniciar el firewall en caso de que se realicen c
 
 # 5. Configuracion de los archivos para el servidor Master (Centro Medico Quito) y los servidores Esclavos (Centro Medico Guayaquil y Centro Medico Cuenca)
 
-# - En el servidor Master (Centro Medico Quito), se debe crear un usuario para la replicacion y otorgarle permisos:
-mysql -u root -p
-CREATE USER 'replicador'@'%' IDENTIFIED BY 'password';
-GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
-FLUSH PRIVILEGES;
-SHOW MASTER STATUS;
+# - En el servidor Master (Centro Medico Quito), se debe editar el archivo de configuracion de mysql:
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 
-# - En el servidor Esclavo (Centro Medico Guayaquil y Centro Medico Cuenca), se debe crear un usuario para la replicacion y otorgarle permisos:
-mysql -u root -p
-CREATE USER 'replicador'@'%' IDENTIFIED BY 'password';
-GRANT REPLICATION SLAVE ON *.* TO 'replicador'@'%';
-FLUSH PRIV
-ILEGES;
+# - En el servidor Esclavo (Centro Medico Guayaquil y Centro Medico Cuenca), se debe editar el archivo de configuracion de mysql:
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+
+
 
 
 
