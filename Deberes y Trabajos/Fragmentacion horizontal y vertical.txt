@@ -1,3 +1,6 @@
+Guias de fragmentacion 1 y 2.
+
+
 🧩 ¿Qué es la fragmentación horizontal? 
 
 Es una técnica de distribución de datos en la que una tabla se divide en subconjuntos de filas (tuplas), normalmente basándose en un criterio lógico, como el valor de una columna. Esto permite almacenar estos fragmentos en diferentes nodos o servidores, mejorando la eficiencia y localización de los datos. 
@@ -136,9 +139,6 @@ Facilita la escalabilidad horizontal.
 Usaremos una tabla sencilla de empleados: 
 
  
-
- 
-
 CREATE DATABASE FragmentacionEjemplo; 
 
 GO 
@@ -147,7 +147,6 @@ USE FragmentacionEjemplo;
 
 GO 
 
-  
 
 CREATE TABLE Empleados ( 
 
@@ -166,8 +165,6 @@ CREATE TABLE Empleados (
     Telefono NVARCHAR(20) 
 
 ); 
-
-  
 
 INSERT INTO Empleados VALUES 
 
