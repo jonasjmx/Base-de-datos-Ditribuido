@@ -1,0 +1,108 @@
+-- Guia para replicacion en SMSS
+
+-- La replicación en SQL Server permite sincronizar datos entre diferentes instancias de SQL Server. A continuación, se describe cómo configurar la replicación con un Publicador y un Suscriptor en SQL Server Management Studio (SSMS) 2022.
+-- 
+-- 1. Configuración inicial
+-- Requisitos previos:
+-- 
+-- Asegúrate de que ambas instancias de SQL Server estén instaladas y configuradas en las máquinas Windows.
+-- Ambas instancias deben estar en la misma red y deben poder comunicarse entre sí.
+-- Habilita el protocolo TCP/IP en ambas instancias desde el SQL Server Configuration Manager.
+-- Asegúrate de que el puerto 1433 esté abierto en el firewall de ambas máquinas.
+-- Permisos necesarios:
+-- 
+-- El usuario que realiza la configuración debe tener permisos de administrador en ambas instancias de SQL Server.
+-- El servicio de SQL Server Agent debe estar habilitado y en ejecución en ambas instancias.
+-- 2. Configurar el Distribuidor
+-- Abrir SSMS:
+-- 
+-- Inicia sesión en la instancia de SQL Server que actuará como Distribuidor y Publicador.
+-- Configurar el Distribuidor:
+-- 
+-- En el Explorador de Objetos, haz clic derecho en Replication y selecciona Configure Distribution.
+-- Se abrirá el asistente de configuración de distribución. Haz clic en Next.
+-- Seleccionar el servidor Distribuidor:
+-- 
+-- Elige si el servidor actual actuará como su propio Distribuidor o si usarás un servidor Distribuidor remoto.
+-- Si seleccionas que el servidor actual sea el Distribuidor, especifica una ubicación para la base de datos de distribución (por defecto, se almacena en C:\Program Files\Microsoft SQL Server\MSSQL\Data).
+-- Configurar la base de datos de distribución:
+-- 
+-- Revisa la configuración predeterminada de la base de datos de distribución y ajusta las opciones si es necesario.
+-- Haz clic en Next y luego en Finish para completar la configuración.
+-- 3. Configurar el Publicador
+-- Crear una publicación:
+-- 
+-- En el Explorador de Objetos, haz clic derecho en Replication > Local Publications y selecciona New Publication.
+-- Se abrirá el asistente para crear una nueva publicación. Haz clic en Next.
+-- Seleccionar la base de datos:
+-- 
+-- Elige la base de datos que deseas replicar y haz clic en Next.
+-- Seleccionar el tipo de replicación:
+-- 
+-- Selecciona el tipo de replicación que deseas usar:
+-- Snapshot Replication: Replica toda la base de datos en intervalos regulares.
+-- Transactional Replication: Replica los cambios en tiempo real.
+-- Merge Replication: Permite que tanto el Publicador como el Suscriptor realicen cambios.
+-- Haz clic en Next.
+-- Configurar los artículos:
+-- 
+-- Selecciona las tablas, vistas, procedimientos almacenados u otros objetos que deseas incluir en la publicación.
+-- Opcionalmente, puedes filtrar columnas o filas específicas para replicar solo una parte de los datos.
+-- Haz clic en Next.
+-- Configurar el Agente de Snapshot:
+-- 
+-- Especifica la cuenta de Windows que usará el Agente de Snapshot para ejecutar los trabajos de replicación.
+-- Asegúrate de que la cuenta tenga permisos en el servidor y en la carpeta compartida de la base de datos de distribución.
+-- Haz clic en Next.
+-- Completar la configuración:
+-- 
+-- Asigna un nombre a la publicación y haz clic en Finish para crear la publicación.
+-- 4. Configurar el Suscriptor
+-- Crear una suscripción:
+-- 
+-- En el Explorador de Objetos, haz clic derecho en Replication > Local Subscriptions y selecciona New Subscription.
+-- Se abrirá el asistente para crear una nueva suscripción. Haz clic en Next.
+-- Seleccionar la publicación:
+-- 
+-- Elige la publicación creada en el paso anterior y haz clic en Next.
+-- Especificar el servidor Suscriptor:
+-- 
+-- Selecciona la instancia de SQL Server que actuará como Suscriptor.
+-- Especifica la base de datos en el Suscriptor donde se replicarán los datos. Puedes elegir una base de datos existente o crear una nueva.
+-- Configurar el Agente de Distribución:
+-- 
+-- Especifica la cuenta de Windows que usará el Agente de Distribución para ejecutar los trabajos de replicación.
+-- Asegúrate de que la cuenta tenga permisos en el servidor Suscriptor.
+-- Configurar el modo de sincronización:
+-- 
+-- Elige cómo se sincronizarán los datos:
+-- Push Subscription: El Publicador envía los datos al Suscriptor.
+-- Pull Subscription: El Suscriptor solicita los datos al Publicador.
+-- Haz clic en Next.
+-- Completar la configuración:
+-- 
+-- Revisa el resumen de la configuración y haz clic en Finish para crear la suscripción.
+-- 5. Verificar la replicación
+-- Monitor de replicación:
+-- 
+-- En el Explorador de Objetos, haz clic derecho en Replication > Launch Replication Monitor.
+-- Verifica que la replicación esté funcionando correctamente y que no haya errores.
+-- Probar la replicación:
+-- 
+-- Realiza cambios en la base de datos del Publicador (por ejemplo, inserta, actualiza o elimina registros).
+-- Verifica que los cambios se reflejen en la base de datos del Suscriptor.
+-- 6. Solución de problemas comunes
+-- Errores de conexión:
+-- 
+-- Asegúrate de que el puerto 1433 esté abierto en el firewall de ambas máquinas.
+-- Verifica que el protocolo TCP/IP esté habilitado en ambas instancias de SQL Server.
+-- Permisos insuficientes:
+-- 
+-- Asegúrate de que las cuentas utilizadas por los agentes de replicación tengan los permisos necesarios en las carpetas compartidas y en las bases de datos.
+-- Errores en el Monitor de Replicación:
+-- 
+-- Revisa los detalles de los errores en el Monitor de Replicación y corrige la configuración según sea necesario.
+-- 7. Mantenimiento de la replicación
+-- Programa trabajos de mantenimiento para limpiar los registros de replicación antiguos.
+-- Monitorea regularmente el estado de la replicación para asegurarte de que funcione correctamente.
+-- Con estos pasos, habrás configurado con éxito la replicación con Publicador y Suscriptor entre dos instancias de SQL Server Management Studio 2022 en Windows.
